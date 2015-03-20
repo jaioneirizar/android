@@ -135,7 +135,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="C"
+            android:text="punto"
             android:id="@+id/btnclear"
             android:layout_weight="1" />
 
