@@ -1,17 +1,36 @@
 package com.jaioneirizar.todolistfragment;
 
+import android.app.Fragment;
+import android.app.ListFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.jaioneirizar.todolistfragment.fragments.InputFragment;
+import com.jaioneirizar.todolistfragment.model.ToDo;
 
-public class MainActivity extends ActionBarActivity {
+import java.util.ArrayList;
+
+
+public class MainActivity extends ActionBarActivity implements InputFragment.TODOItemListener  {
+
+    private  InputFragment.TODOItemListener listfragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        try{
+            listfragment= (InputFragment.TODOItemListener)getFragmentManager().findFragmentById(R.id.listFragment);
+
+        }catch (ClassCastException ex){
+
+            throw new  ClassCastException(this.toString() + "must implement TODOItemListener interface");
+        }
     }
 
 
@@ -35,5 +54,14 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+
+    @Override
+    public void addTodo(ToDo todo) {
+
+
+        listfragment.addTodo(todo);
     }
 }

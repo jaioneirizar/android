@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.jaioneirizar.todolistfragment.R;
+import com.jaioneirizar.todolistfragment.model.ToDo;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,7 +19,7 @@ import com.jaioneirizar.todolistfragment.R;
 public class InputFragment extends Fragment {
 
     public interface TODOItemListener {
-        public void addTodo(String todo);
+        public void addTodo(ToDo todo);
     }
 
     private Button btnAdd;
@@ -27,12 +28,11 @@ public class InputFragment extends Fragment {
     private TODOItemListener target;
 
 
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            this.target=(TODOItemListener)activity;
+            this.target=(TODOItemListener) activity;
         }catch (ClassCastException ex){
 
             throw new  ClassCastException(activity.toString() + "must implement TODOItemListener interface");
@@ -59,7 +59,10 @@ public class InputFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     String todo= todoText.getText().toString();
-                    target.addTodo(todo);
+
+
+                    ToDo Todo = new ToDo(todoText.getText().toString());
+                    target.addTodo(Todo);
 
                 }
             });
