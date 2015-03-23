@@ -3,12 +3,14 @@ package com.jaioneirizar.todolistfragment.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  * Created by cursomovil on 23/03/15.
  */
 public class ToDo implements Parcelable{
+    private int mData;
 
     private String task;
     private Date created;
@@ -30,6 +32,11 @@ public class ToDo implements Parcelable{
         return created;
     }
 
+    public String getCreatedFormated() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        return sdf.format(this.created);
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -37,6 +44,30 @@ public class ToDo implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+       
+        dest.writeString(task);
+        dest.writeLong(created.getTime());
+
 
     }
+
+
+
+    public static final Parcelable.Creator<ToDo> CREATOR
+            = new Parcelable.Creator<ToDo>() {
+        public ToDo createFromParcel(Parcel in) {
+            return new ToDo(in);
+        }
+
+        public ToDo[] newArray(int size) {
+            return new ToDo[size];
+        }
+    };
+
+    private ToDo (Parcel in) {
+         task= in.readString();
+        created= new Date(in.readLong());
+    }
 }
+
+

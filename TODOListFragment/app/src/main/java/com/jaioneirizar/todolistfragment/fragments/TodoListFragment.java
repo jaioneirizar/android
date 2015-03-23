@@ -1,6 +1,7 @@
 package com.jaioneirizar.todolistfragment.fragments;
 
 import android.app.ListFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 
+import com.jaioneirizar.todolistfragment.DetailActivity;
 import com.jaioneirizar.todolistfragment.R;
 
 import com.jaioneirizar.todolistfragment.adapters.ToDoAdapter;
@@ -30,6 +32,7 @@ public class TodoListFragment extends ListFragment implements InputFragment.TODO
     private ArrayList <ToDo> todos;
     private ArrayAdapter <ToDo> aa;
     private final String DATA= "datos";
+    public static final String TODO_ITEM= "TODO_ITEM";
     private ArrayList data;
 
     @Override
@@ -73,8 +76,12 @@ public class TodoListFragment extends ListFragment implements InputFragment.TODO
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        todos.remove(position);
-        aa.notifyDataSetChanged();
+
+        ToDo todo= todos.get(position);
+
+        Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
+         detailIntent.putExtra(TODO_ITEM, todo);
+        startActivity(detailIntent);
     }
 }
 
