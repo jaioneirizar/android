@@ -5,4 +5,15 @@
     <string name="action_settings">Settings</string>
     <string name="earthquakesurl">http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson</string>
     <string name="title_activity_earth_quake_activity_detail">EarthQuakeActivityDetail</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="earthqueakes_refresh">EarthQuakes Refresh</string>
+    <string name="earthqueakes_filter">EarthQuakes Filters</string>
+    <string name="feature_id">autorefresh</string>
+    <string name="feature_title">autorefresh</string>
+    <string name="pref_auto_update">PREF_AUTO_UPDATE</string>
+    <string name="pref_auto_interval">PREF_AUTO_UPDATE</string>
+    <string name="auto_update_prompt">AUTOREFRESH</string>
+    <string name="auto_updt_descr">Description</string>
+    <string name="auto_update_interval">UPDATE INTERVAL</string>
+    <string name="auto_update_interval_prompt">INTERVAL</string>
 </resources>
