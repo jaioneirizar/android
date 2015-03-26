@@ -2,6 +2,7 @@ package com.jaioneirizar.earthquakes.tasks;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.jaioneirizar.earthquakes.R;
 import com.jaioneirizar.earthquakes.model.Coordinate;
@@ -26,6 +27,7 @@ public class DowloadEarthQuakesTask extends AsyncTask<String, EarthQuake,Integer
 
     public interface AddEarthQuakeInterface{
         public void addEarthQuake(EarthQuake earthquake);
+        public void notifyTotal(int Total);
     }
 
     private AddEarthQuakeInterface target;
@@ -35,10 +37,11 @@ public class DowloadEarthQuakesTask extends AsyncTask<String, EarthQuake,Integer
     }
     @Override
     protected Integer doInBackground(String... urls) {
+        Integer count=0;
         if(urls.length > 0) {
-            updatedEarthQuake(urls[0]);
+            count=updatedEarthQuake(urls[0]);
         }
-        return null;
+        return count;
     }
 
     @Override
@@ -47,9 +50,10 @@ public class DowloadEarthQuakesTask extends AsyncTask<String, EarthQuake,Integer
         target.addEarthQuake(earthQuakes[0]);
     }
 
-    private void updatedEarthQuake(String earthquakesFeed) {
+    private Integer updatedEarthQuake(String earthquakesFeed) {
 
        JSONObject json;
+        Integer count =0;
 
 
        //earthquakesFeed = new URL(earthquakesFeed);
@@ -76,6 +80,7 @@ public class DowloadEarthQuakesTask extends AsyncTask<String, EarthQuake,Integer
 
                 json = new JSONObject(responseStrBuilder.toString());
                 JSONArray earthquakes = json.getJSONArray("features");
+                count = earthquakes.length();
 
                 for (int i = earthquakes.length()-1; i >= 0; i--) {
                     processEarthQuakeTask(earthquakes.getJSONObject(i));
@@ -92,6 +97,8 @@ public class DowloadEarthQuakesTask extends AsyncTask<String, EarthQuake,Integer
             e.printStackTrace();
         }
 
+        return count;
+
     }
 
     private void processEarthQuakeTask(JSONObject jsonObject) {
@@ -107,7 +114,7 @@ public class DowloadEarthQuakesTask extends AsyncTask<String, EarthQuake,Integer
             earthQuake.set_id(id);
             earthQuake.setPlace(properties.getString("place"));
             earthQuake.setMagnitude(properties.getDouble("mag"));
-            earthQuake.setTime(properties.getInt("time"));
+            earthQuake.setTime(properties.getLong("time"));
             earthQuake.setUrl(properties.getString("url"));
             earthQuake.setCoords(coords);
 
@@ -122,6 +129,15 @@ public class DowloadEarthQuakesTask extends AsyncTask<String, EarthQuake,Integer
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+
+    }
+
+    @Override
+    protected void onPostExecute(Integer count) {
+        super.onPostExecute(count);
+        target.notifyTotal(count.intValue());
+
 
 
     }
