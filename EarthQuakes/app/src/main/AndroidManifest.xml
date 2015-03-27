@@ -21,10 +21,11 @@
         <activity
             android:name=".EarthQuakeActivityDetail"
             android:label="@string/title_activity_earth_quake_activity_detail"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity" >
         </activity>
-        <activity android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings">
+        <activity
+            android:name=".SettingsActivity2"
+            android:label="@string/title_activity_settings_activity2" >
         </activity>
     </application>
 

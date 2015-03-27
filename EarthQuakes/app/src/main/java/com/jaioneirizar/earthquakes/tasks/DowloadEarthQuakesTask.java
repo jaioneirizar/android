@@ -1,10 +1,12 @@
 package com.jaioneirizar.earthquakes.tasks;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.jaioneirizar.earthquakes.R;
+import com.jaioneirizar.earthquakes.database.EarthQuakeDB;
 import com.jaioneirizar.earthquakes.model.Coordinate;
 import com.jaioneirizar.earthquakes.model.EarthQuake;
 
@@ -25,15 +27,19 @@ import java.net.URLConnection;
  */
 public class DowloadEarthQuakesTask extends AsyncTask<String, EarthQuake,Integer> {
 
+  private EarthQuakeDB earthQuakeDB;
+
     public interface AddEarthQuakeInterface{
-        public void addEarthQuake(EarthQuake earthquake);
+       // public void addEarthQuake(EarthQuake earthquake);
         public void notifyTotal(int Total);
     }
 
     private AddEarthQuakeInterface target;
 
-    public DowloadEarthQuakesTask(AddEarthQuakeInterface target){
+    public DowloadEarthQuakesTask(Context context, AddEarthQuakeInterface target){
         this.target= target;
+
+        earthQuakeDB = new EarthQuakeDB(context);
     }
     @Override
     protected Integer doInBackground(String... urls) {
@@ -47,7 +53,7 @@ public class DowloadEarthQuakesTask extends AsyncTask<String, EarthQuake,Integer
     @Override
     protected void onProgressUpdate(EarthQuake... earthQuakes) {
         super.onProgressUpdate(earthQuakes);
-        target.addEarthQuake(earthQuakes[0]);
+       // target.addEarthQuake(earthQuakes[0]);
     }
 
     private Integer updatedEarthQuake(String earthquakesFeed) {

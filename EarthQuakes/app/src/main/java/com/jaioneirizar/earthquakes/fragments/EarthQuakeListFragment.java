@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.ListFragment;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +47,8 @@ import static android.widget.Toast.makeText;
  * Activities containing this fragment MUST implement the //{@link //OnFragmentInteractionListener}
  * interface.
  */
-public class EarthQuakeListFragment extends ListFragment implements DowloadEarthQuakesTask.AddEarthQuakeInterface
+public class EarthQuakeListFragment extends ListFragment
+        //implements DowloadEarthQuakesTask.AddEarthQuakeInterface
 
 {
 
@@ -61,8 +63,11 @@ public class EarthQuakeListFragment extends ListFragment implements DowloadEarth
         super.onCreate(savedInstanceState);
         earthQuakes = new ArrayList<EarthQuake>();
 
-        DowloadEarthQuakesTask task = new DowloadEarthQuakesTask(this);
-        task.execute(getString(R.string.earthquakesurl));
+        //prefs = PreferenceManager
+
+       /* DowloadEarthQuakesTask task = new DowloadEarthQuakesTask(getActivity(), this);
+
+        task.execute(getString(R.string.earthquakesurl));*/
 
        /* Thread t=  new Thread(new Runnable() {
             @Override
@@ -103,7 +108,7 @@ public class EarthQuakeListFragment extends ListFragment implements DowloadEarth
 
 
     @Override
-    public void addEarthQuake(EarthQuake earthquake) {
+    /*public void addEarthQuake(EarthQuake earthquake) {
         earthQuakes.add(0, earthquake);
         aa.notifyDataSetChanged();
     }
@@ -115,7 +120,7 @@ public class EarthQuakeListFragment extends ListFragment implements DowloadEarth
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(getActivity(), text, duration);
         toast.show();
-    }
+    }*/
 
 
 
