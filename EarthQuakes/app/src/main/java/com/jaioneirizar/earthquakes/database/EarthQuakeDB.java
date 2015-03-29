@@ -25,7 +25,9 @@ public class EarthQuakeDB {
         private static final int DATABASE_VERSION  = 1;
 
 
-        private  static  final String DATABASE_CREATE= "CREATE TABLE" + DATABASE_TABLE + "_id PRIMARY KEY, place TEXT, magnitude REAL, lat REAL,long REAL,depth REAL, url TEXT, time INTEGER";
+        //private  static  final String DATABASE_CREATE= "CREATE TABLE" + DATABASE_TABLE + "_id PRIMARY KEY, place TEXT, magnitude REAL, lat REAL,long REAL, depth REAL, url TEXT, time INTEGER";
+        private static final String DATABASE_CREATE = "CREATE Table " + DATABASE_TABLE +
+                "(_id  TEXT PRIMARY KEY, place TEXT, magnitude REAL, lat REAL , Long REAL, url TEXT,depth REAL, time INTEGER)";
 
 
         public EarthQuakeOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {

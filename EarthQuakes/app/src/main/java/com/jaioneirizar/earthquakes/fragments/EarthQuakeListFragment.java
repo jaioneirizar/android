@@ -3,6 +3,7 @@ package com.jaioneirizar.earthquakes.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.ListFragment;
@@ -52,6 +53,7 @@ public class EarthQuakeListFragment extends ListFragment
 
 {
 
+    private SharedPreferences Prefs=null;
     public static final String EARTHQUAKES_ITEM = "EARTHQUAKES" ;
     private static final String DATA = "datos";
 
@@ -62,6 +64,8 @@ public class EarthQuakeListFragment extends ListFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         earthQuakes = new ArrayList<EarthQuake>();
+
+        Prefs= PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         //prefs = PreferenceManager
 

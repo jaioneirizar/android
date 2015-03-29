@@ -1,13 +1,15 @@
 package com.jaioneirizar.earthquakes;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.util.Log;
 
 
 import com.jaioneirizar.earthquakes.fragments.SettingsFragment;
 
-public class SettingsActivity extends PreferenceActivity  {
+public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +29,11 @@ public class SettingsActivity extends PreferenceActivity  {
 
 
    // @Override
-   /* public void onSharedPreferenceChanged(SharedPreferences pref, String key) {
+    public void onSharedPreferenceChanged(SharedPreferences pref, String key) {
 
-        if(pref.getString("jaione","").equals("PREF_AUTO_UPDATE")){
+        Log.d("CHANGE", key);
 
-            Log.d("jaione", "jaione");
-
-
-        }*/
+    }
 
 
 

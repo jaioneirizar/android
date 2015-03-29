@@ -24,7 +24,7 @@
             android:parentActivityName=".MainActivity" >
         </activity>
         <activity
-            android:name=".SettingsActivity2"
+            android:name=".SettingsActivity"
             android:label="@string/title_activity_settings_activity2" >
         </activity>
     </application>

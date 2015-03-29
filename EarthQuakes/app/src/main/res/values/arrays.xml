@@ -29,13 +29,14 @@
         <item>7</item>
     </string-array>
     <string-array name="listmagnitude_options">
-        <item>2"</item>
-        <item>5min</item>
-        <item>30min</item>
-        <item>1h</item>
-        <item>12h</item>
-        <item>1day</item>
-        <item>1week</item>
+        <item>Grado 1</item>
+        <item>Grado 2</item>
+        <item>Grado 3</item>
+        <item>Grado 4</item>
+        <item>Grado 5</item>
+        <item>Grado 6</item>
+        <item>Grado 7</item>
+
     </string-array>
 
 </resources>

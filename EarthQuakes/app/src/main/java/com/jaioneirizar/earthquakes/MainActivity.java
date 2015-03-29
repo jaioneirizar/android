@@ -52,21 +52,10 @@ public class MainActivity extends ActionBarActivity implements DowloadEarthQuake
         return super.onOptionsItemSelected(item);
     }
 
-
-    //@Override
-    //public void addEarthQuake(EarthQuake earthquake) {
-      /*  earthQuakes.add(0, earthquake);
-        aa.notifyDataSetChanged();*/
-
-    //}
-
     @Override
     public void notifyTotal(int Total) {
-
-        CharSequence text = Total+"Terremotos";
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(this, text, duration);
+        String msg= getString(R.string.Mensaje,Total);
+        Toast toast=  Toast.makeText( this,msg + Total, Toast.LENGTH_LONG);
         toast.show();
-
     }
 }
