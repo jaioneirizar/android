@@ -1,14 +1,18 @@
 package com.jaioneirizar.earthquakes.tasks;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.jaioneirizar.earthquakes.MainActivity;
 import com.jaioneirizar.earthquakes.R;
 import com.jaioneirizar.earthquakes.database.EarthQuakeDB;
+import com.jaioneirizar.earthquakes.fragments.EarthQuakeListFragment;
 import com.jaioneirizar.earthquakes.model.Coordinate;
 import com.jaioneirizar.earthquakes.model.EarthQuake;
+import  com.jaioneirizar.earthquakes.fragments.EarthQuakeListFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,9 +32,11 @@ import java.net.URLConnection;
 public class DowloadEarthQuakesTask extends AsyncTask<String, EarthQuake,Integer> {
 
   private EarthQuakeDB earthQuakeDB;
+  private EarthQuake earthqueake;
+
 
     public interface AddEarthQuakeInterface{
-       // public void addEarthQuake(EarthQuake earthquake);
+     //  public void addEarthQuake(EarthQuake earthquake);
         public void notifyTotal(int Total);
     }
 
@@ -38,8 +44,8 @@ public class DowloadEarthQuakesTask extends AsyncTask<String, EarthQuake,Integer
 
     public DowloadEarthQuakesTask(Context context, AddEarthQuakeInterface target){
         this.target= target;
-
         earthQuakeDB = new EarthQuakeDB(context);
+
     }
     @Override
     protected Integer doInBackground(String... urls) {
@@ -53,6 +59,7 @@ public class DowloadEarthQuakesTask extends AsyncTask<String, EarthQuake,Integer
     @Override
     protected void onProgressUpdate(EarthQuake... earthQuakes) {
         super.onProgressUpdate(earthQuakes);
+
        // target.addEarthQuake(earthQuakes[0]);
     }
 
@@ -95,6 +102,9 @@ public class DowloadEarthQuakesTask extends AsyncTask<String, EarthQuake,Integer
 
             }
 
+
+            earthQuakeDB.createRow(earthqueake);
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -106,6 +116,8 @@ public class DowloadEarthQuakesTask extends AsyncTask<String, EarthQuake,Integer
         return count;
 
     }
+
+
 
     private void processEarthQuakeTask(JSONObject jsonObject) {
 
@@ -135,6 +147,7 @@ public class DowloadEarthQuakesTask extends AsyncTask<String, EarthQuake,Integer
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
 
 
     }

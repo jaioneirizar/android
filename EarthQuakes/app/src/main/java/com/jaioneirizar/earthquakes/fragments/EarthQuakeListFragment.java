@@ -1,9 +1,12 @@
 package com.jaioneirizar.earthquakes.fragments;
 
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.ListFragment;
@@ -19,6 +22,7 @@ import android.widget.Toast;
 import com.jaioneirizar.earthquakes.EarthQuakeActivityDetail;
 import com.jaioneirizar.earthquakes.R;
 
+import com.jaioneirizar.earthquakes.database.EarthQuakeDB;
 import com.jaioneirizar.earthquakes.fragments.dummy.DummyContent;
 import com.jaioneirizar.earthquakes.model.Coordinate;
 import com.jaioneirizar.earthquakes.model.EarthQuake;
@@ -57,15 +61,22 @@ public class EarthQuakeListFragment extends ListFragment
     public static final String EARTHQUAKES_ITEM = "EARTHQUAKES" ;
     private static final String DATA = "datos";
 
+    private EarthQuakeDB dbHelper;
+
+
     private JSONObject json;
     private ArrayList<EarthQuake> earthQuakes;
     private ArrayAdapter<EarthQuake> aa;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        earthQuakes = new ArrayList<EarthQuake>();
-
         Prefs= PreferenceManager.getDefaultSharedPreferences(getActivity());
+         int minMag = Integer.valueOf(Prefs.getString(magnitude));
+
+        earthQuakes = (ArrayList<EarthQuake>) dbHelper.getAllByMagnitude(minMag);
+
+
+
 
         //prefs = PreferenceManager
 
@@ -111,20 +122,19 @@ public class EarthQuakeListFragment extends ListFragment
     }
 
 
-    @Override
-    /*public void addEarthQuake(EarthQuake earthquake) {
-        earthQuakes.add(0, earthquake);
-        aa.notifyDataSetChanged();
-    }
+
+
 
     @Override
-    public void notifyTotal(int Total) {
+  /*  public void notifyTotal(int Total) {
 
         CharSequence text = Total+"Terremotos";
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(getActivity(), text, duration);
         toast.show();
     }*/
+
+
 
 
 
@@ -138,4 +148,7 @@ public class EarthQuakeListFragment extends ListFragment
         detailIntent.putExtra(EARTHQUAKES_ITEM,earthQuake);
         startActivity(detailIntent);
     }
+
+
+
 }
