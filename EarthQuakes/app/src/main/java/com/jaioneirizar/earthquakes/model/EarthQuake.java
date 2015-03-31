@@ -18,16 +18,19 @@ public class EarthQuake implements Parcelable {
     private String url;
 
 
-    public EarthQuake(String _id, String place, Coordinate coords, Date time, double magnitude) {
+    public EarthQuake(String _id, String place, Date date, Coordinate coords, double magnitude) {
+        this();
+
         this._id = _id;
         this.place = place;
+        this.time = date;
         this.coords = coords;
-        this.time = time;
         this.magnitude = magnitude;
+
     }
 
-    public EarthQuake(){
-
+    public EarthQuake() {
+        this.coords = new Coordinate(0.0, 0.0, 0.0);
     }
 
   @Override
@@ -97,7 +100,10 @@ public class EarthQuake implements Parcelable {
 
     private EarthQuake (Parcel in) {
         _id=in.readString();
-        place= in.readString();
+        place=in.readString();
+        time=new Date(in.readLong());
+        magnitude=in.readDouble();
+        url=in.readString();
 
     }
 
@@ -109,8 +115,11 @@ public class EarthQuake implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
 
-        dest.writeString(place);
         dest.writeString(_id);
+        dest.writeString(place);
+        dest.writeLong(time.getTime());
+        dest.writeDouble(magnitude);
+        dest.writeString(url);
 
     }
 }

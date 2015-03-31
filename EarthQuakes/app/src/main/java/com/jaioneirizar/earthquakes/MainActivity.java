@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.jaioneirizar.earthquakes.database.EarthQuakeDB;
+import com.jaioneirizar.earthquakes.services.DownloadEarthQuakesService;
 import com.jaioneirizar.earthquakes.tasks.DowloadEarthQuakesTask;
 
 
@@ -20,9 +21,12 @@ public class MainActivity extends ActionBarActivity implements DowloadEarthQuake
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        DowloadEarthQuakesTask task = new DowloadEarthQuakesTask(this,this);
 
-        task.execute(getString(R.string.earthquakesurl));
+        Intent download = new Intent(this, DownloadEarthQuakesService.class);
+        startService(download);
+      /*  DowloadEarthQuakesTask task = new DowloadEarthQuakesTask(this,this);
+
+        task.execute(getString(R.string.earthquakesurl));*/
 
 
 
@@ -36,7 +40,7 @@ public class MainActivity extends ActionBarActivity implements DowloadEarthQuake
 
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        dbHelper.queryAll();
+       // dbHelper.queryAll();
         return true;
     }
 

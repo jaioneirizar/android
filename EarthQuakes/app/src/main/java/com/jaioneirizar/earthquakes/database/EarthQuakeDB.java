@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.jaioneirizar.earthquakes.model.Coordinate;
 import com.jaioneirizar.earthquakes.model.EarthQuake;
 
 import java.sql.SQLException;
@@ -36,7 +37,7 @@ public class EarthQuakeDB {
     public static final String KEY_TIME = "time";
 
     public static final String[] KEYS_ALL = {KEY_ID,KEY_PLACE,KEY_MAGNITUDE, KEY_LAT, KEY_LONG, KEY_URL,KEY_DEPTH, KEY_TIME };
-    
+
     public EarthQuakeDB (Context context){
 
         this.dbhelper= new EarthQuakeOpenHelper(context, EarthQuakeOpenHelper.DATABASE_NAME, null, EarthQuakeOpenHelper.DATABASE_VERSION);
@@ -49,70 +50,35 @@ public class EarthQuakeDB {
     }
 
     public List <EarthQuake> getAllByMagnitude(int magnitude){
-        String where= KEY_MAGNITUDE + ">=?";
+        String where = KEY_MAGNITUDE + ">=?";
 
         String [] whereArgs = {
-                String.valueOf(magnitude);
-        }
+                String.valueOf(magnitude)
+        };
         return query(where, whereArgs);
 
     }
 
-    private List<EarthQuake> query() {
 
-        List <EarthQuake> earthQuakes = new ArrayList<>();
+    public List getEarthQuake(String id){
+            String where = KEY_ID + "=?";
+             String [] whereArgs = { id
+        };
+        return query(where, whereArgs);
 
-            Cursor cursor;
-        cursor = db.query(
-                EarthQuakeOpenHelper.DATABASE_TABLE,
-                KEYS_ALL,
-                null,
-                null,
-                null,
-                null,
-                KEY_TIME + " DESC"
-        );
+    }
 
-        HashMap<String, Integer> indexes = new HashMap<>();
-        for (int i=0; i< KEYS_ALL.length; i++){
-            indexes.put(KEYS_ALL[i],cursor.getColumnIndex(KEYS_ALL[i]));
-        }
-        while (cursor.moveToNext()){
+    private List<EarthQuake> query(String where, String[]  whereArgs) {
 
-            EarthQuake earthquake;
-            earthquake.set_id(cursor.getString(indexes.get(KEY_ID)));
-            earthquake.setPlace(cursor.getString(indexes.get(KEY_PLACE)));
-            earthquake.setMagnitude(cursor.getDouble(indexes.get(KEY_MAGNITUDE)));
-            earthquake.setLa(cursor.getDouble(indexes.get(KEY_LAT)));
-            earthquake.setLong(cursor.getDouble(indexes.get(KEY_LONG)));
-            earthquake.setUrl(cursor.getString(indexes.get(KEY_URL)));
-            earthquake.setTime(cursor.getString(indexes.get(KEY_TIME)));
-
-            earthQuakes.add(earthquake);
-
-
-
-        }
-
-
-
-        return earthQuakes;
-
-        }
-
-
-
-    public List<EarthQuake> query(String where, String  whereArgs) {
-
-        List <EarthQuake> earthQuakes = new ArrayList<>();
+        List <EarthQuake> earthQuakes = new ArrayList<EarthQuake>();
 
         Cursor cursor;
         cursor = db.query(
                 EarthQuakeOpenHelper.DATABASE_TABLE,
                 KEYS_ALL,
-                null,
                 where,
                 whereArgs,
+                null,
                 null,
                 KEY_TIME + " DESC"
         );
@@ -123,14 +89,16 @@ public class EarthQuakeDB {
         }
         while (cursor.moveToNext()){
 
-            EarthQuake earthquake;
+            EarthQuake earthquake=new EarthQuake();
             earthquake.set_id(cursor.getString(indexes.get(KEY_ID)));
             earthquake.setPlace(cursor.getString(indexes.get(KEY_PLACE)));
             earthquake.setMagnitude(cursor.getDouble(indexes.get(KEY_MAGNITUDE)));
-            earthquake.setLa(cursor.getDouble(indexes.get(KEY_LAT)));
-            earthquake.setLong(cursor.getDouble(indexes.get(KEY_LONG)));
+            earthquake.getCoords().setLat(cursor.getDouble(indexes.get(KEY_LAT)));
+            earthquake.getCoords().setLng(cursor.getDouble(indexes.get(KEY_LONG)));
+            earthquake.getCoords().setDepth(cursor.getDouble(indexes.get(KEY_DEPTH)));
             earthquake.setUrl(cursor.getString(indexes.get(KEY_URL)));
-            earthquake.setTime(cursor.getString(indexes.get(KEY_TIME)));
+            earthquake.setTime(cursor.getLong(indexes.get(KEY_TIME)));
+
 
             earthQuakes.add(earthquake);
 
@@ -143,7 +111,6 @@ public class EarthQuakeDB {
         return earthQuakes;
 
     }
-
 
 
     public void createRow(EarthQuake earthquake) {
@@ -168,6 +135,7 @@ public class EarthQuakeDB {
         }
 
     }
+
 
 
 

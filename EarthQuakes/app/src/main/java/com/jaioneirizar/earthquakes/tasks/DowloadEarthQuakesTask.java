@@ -12,7 +12,7 @@ import com.jaioneirizar.earthquakes.database.EarthQuakeDB;
 import com.jaioneirizar.earthquakes.fragments.EarthQuakeListFragment;
 import com.jaioneirizar.earthquakes.model.Coordinate;
 import com.jaioneirizar.earthquakes.model.EarthQuake;
-import  com.jaioneirizar.earthquakes.fragments.EarthQuakeListFragment;
+import com.jaioneirizar.earthquakes.fragments.EarthQuakeListFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,29 +29,29 @@ import java.net.URLConnection;
 /**
  * Created by cursomovil on 25/03/15.
  */
-public class DowloadEarthQuakesTask extends AsyncTask<String, EarthQuake,Integer> {
+public class DowloadEarthQuakesTask extends AsyncTask<String, EarthQuake, Integer> {
 
-  private EarthQuakeDB earthQuakeDB;
-  private EarthQuake earthqueake;
+    private EarthQuakeDB earthQuakeDB;
 
 
-    public interface AddEarthQuakeInterface{
-     //  public void addEarthQuake(EarthQuake earthquake);
+    public interface AddEarthQuakeInterface {
+        //  public void addEarthQuake(EarthQuake earthquake);
         public void notifyTotal(int Total);
     }
 
     private AddEarthQuakeInterface target;
 
-    public DowloadEarthQuakesTask(Context context, AddEarthQuakeInterface target){
-        this.target= target;
+    public DowloadEarthQuakesTask(Context context, AddEarthQuakeInterface target) {
+        this.target = target;
         earthQuakeDB = new EarthQuakeDB(context);
 
     }
+
     @Override
     protected Integer doInBackground(String... urls) {
-        Integer count=0;
-        if(urls.length > 0) {
-            count=updatedEarthQuake(urls[0]);
+        Integer count = 0;
+        if (urls.length > 0) {
+            count = updatedEarthQuake(urls[0]);
         }
         return count;
     }
@@ -60,26 +60,26 @@ public class DowloadEarthQuakesTask extends AsyncTask<String, EarthQuake,Integer
     protected void onProgressUpdate(EarthQuake... earthQuakes) {
         super.onProgressUpdate(earthQuakes);
 
-       // target.addEarthQuake(earthQuakes[0]);
+        // target.addEarthQuake(earthQuakes[0]);
     }
 
     private Integer updatedEarthQuake(String earthquakesFeed) {
 
-       JSONObject json;
-        Integer count =0;
+        JSONObject json;
+        Integer count = 0;
 
 
-       //earthquakesFeed = new URL(earthquakesFeed);
-       // String earthquakesFeed= getString(R.string.earthquakesurl);
+        //earthquakesFeed = new URL(earthquakesFeed);
+        // String earthquakesFeed= getString(R.string.earthquakesurl);
 
-        try{
+        try {
 
             URL url = new URL(earthquakesFeed);
             //	Create	a	new	HTTP	URL	connection
-            URLConnection connection	=	url.openConnection();
-            HttpURLConnection httpConnection	=	(HttpURLConnection)connection;
-            int	responseCode	=	httpConnection.getResponseCode();
-            if	(responseCode	==	HttpURLConnection.HTTP_OK)	{
+            URLConnection connection = url.openConnection();
+            HttpURLConnection httpConnection = (HttpURLConnection) connection;
+            int responseCode = httpConnection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
 
 
                 BufferedReader streamReader = new BufferedReader(
@@ -95,15 +95,13 @@ public class DowloadEarthQuakesTask extends AsyncTask<String, EarthQuake,Integer
                 JSONArray earthquakes = json.getJSONArray("features");
                 count = earthquakes.length();
 
-                for (int i = earthquakes.length()-1; i >= 0; i--) {
+                for (int i = earthquakes.length() - 1; i >= 0; i--) {
                     processEarthQuakeTask(earthquakes.getJSONObject(i));
                 }
 
 
             }
 
-
-            earthQuakeDB.createRow(earthqueake);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -118,16 +116,15 @@ public class DowloadEarthQuakesTask extends AsyncTask<String, EarthQuake,Integer
     }
 
 
-
     private void processEarthQuakeTask(JSONObject jsonObject) {
 
         try {
             String id = jsonObject.getString("id");
-            JSONArray jSoncoords =jsonObject.getJSONObject("geometry").getJSONArray("coordinates");
-            Coordinate coords = new Coordinate(jSoncoords.getDouble(0), jSoncoords.getDouble(1),jSoncoords.getDouble(2));
+            JSONArray jSoncoords = jsonObject.getJSONObject("geometry").getJSONArray("coordinates");
+            Coordinate coords = new Coordinate(jSoncoords.getDouble(0), jSoncoords.getDouble(1), jSoncoords.getDouble(2));
             JSONObject properties = jsonObject.getJSONObject("properties");
 
-            EarthQuake earthQuake= new EarthQuake();
+            EarthQuake earthQuake = new EarthQuake();
             //earthQuake.set_id(properties.getString("id"));
             earthQuake.set_id(id);
             earthQuake.setPlace(properties.getString("place"));
@@ -140,14 +137,15 @@ public class DowloadEarthQuakesTask extends AsyncTask<String, EarthQuake,Integer
 
            /*Necesario para conectarse con la vista, llama a la funcion on ProgressUpdate, para esto es necesario la
            * interface*/
-           publishProgress(earthQuake);
+            publishProgress(earthQuake);
             //earthQuakes.add(0,earthQuake);
             //aa.notifyDataSetChanged();
+
+            earthQuakeDB.createRow(earthQuake);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
 
 
     }
@@ -156,7 +154,6 @@ public class DowloadEarthQuakesTask extends AsyncTask<String, EarthQuake,Integer
     protected void onPostExecute(Integer count) {
         super.onPostExecute(count);
         target.notifyTotal(count.intValue());
-
 
 
     }

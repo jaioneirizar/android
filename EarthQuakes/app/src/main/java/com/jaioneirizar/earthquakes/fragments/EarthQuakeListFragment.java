@@ -1,13 +1,8 @@
 package com.jaioneirizar.earthquakes.fragments;
 
 
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.ListFragment;
 import android.preference.PreferenceManager;
@@ -17,30 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.jaioneirizar.earthquakes.EarthQuakeActivityDetail;
 import com.jaioneirizar.earthquakes.R;
 
 import com.jaioneirizar.earthquakes.database.EarthQuakeDB;
-import com.jaioneirizar.earthquakes.fragments.dummy.DummyContent;
-import com.jaioneirizar.earthquakes.model.Coordinate;
 import com.jaioneirizar.earthquakes.model.EarthQuake;
-import com.jaioneirizar.earthquakes.tasks.DowloadEarthQuakesTask;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
+
 import com.jaioneirizar.earthquakes.adapters.earthQuakesAdapter;
 
 import static android.widget.Toast.makeText;
@@ -57,25 +39,25 @@ public class EarthQuakeListFragment extends ListFragment
 
 {
 
-    private SharedPreferences Prefs=null;
-    public static final String EARTHQUAKES_ITEM = "EARTHQUAKES" ;
+    private SharedPreferences prefs = null;
+    public static final String EARTHQUAKES_ITEM = "EARTHQUAKES";
     private static final String DATA = "datos";
 
-    private EarthQuakeDB dbHelper;
+    private EarthQuakeDB db;
 
 
-    private JSONObject json;
     private ArrayList<EarthQuake> earthQuakes;
     private ArrayAdapter<EarthQuake> aa;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EarthQuakeDB
-         int minMag = Integer.getInteger(prefs.getString()
-        earthQuakes = earthQuakesDB.getAllByMagnitude();
+
+        prefs= PreferenceManager.getDefaultSharedPreferences(getActivity());
+        db = new EarthQuakeDB(getActivity());
 
 
-        Prefs= PreferenceManager.getDefaultSharedPreferences(getActivity());
+
 
         //prefs = PreferenceManager
 
@@ -97,23 +79,25 @@ public class EarthQuakeListFragment extends ListFragment
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View layout=super.onCreateView(inflater, container, savedInstanceState);
+        View layout = super.onCreateView(inflater, container, savedInstanceState);
 
         //aa = new earthQuakesAdapter(getActivity(),R.layout.earthquakes_list,earthQuakes);
 
 
-        earthQuakes= new ArrayList<EarthQuake>();
-        aa = new earthQuakesAdapter(getActivity(),R.layout.earthquakes_list, earthQuakes);
+        earthQuakes = new ArrayList<EarthQuake>();
+        aa = new earthQuakesAdapter(getActivity(), R.layout.earthquakes_list, earthQuakes);
 
-      if(savedInstanceState!= null) {
+        if (savedInstanceState != null) {
 
-          ArrayList<EarthQuake> tmp = savedInstanceState.getParcelableArrayList(DATA);
+            ArrayList<EarthQuake> tmp = savedInstanceState.getParcelableArrayList(DATA);
 
-          if (tmp != null) {
+            if (tmp != null) {
 
-              earthQuakes.addAll(tmp);
-          }
-      }
+                earthQuakes.addAll(tmp);
+            }
+        }
+
+
         setListAdapter(aa);
 
         return layout;
@@ -121,33 +105,29 @@ public class EarthQuakeListFragment extends ListFragment
     }
 
 
-
-
-
     @Override
-  /*  public void notifyTotal(int Total) {
-
-        CharSequence text = Total+"Terremotos";
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(getActivity(), text, duration);
-        toast.show();
-    }*/
+    public void onResume() {
+        super.onResume();
 
 
+        int minMag = Integer.parseInt(prefs.getString(getString(R.string.magnitude), "0"));
 
+        earthQuakes.clear();
+        earthQuakes.addAll(db.getAllByMagnitude(minMag));
+
+        aa.notifyDataSetChanged();
+    }
 
 
 
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        EarthQuake earthQuake= earthQuakes.get(position);
-
+        EarthQuake earthQuake = earthQuakes.get(position);
         Intent detailIntent = new Intent(getActivity(), EarthQuakeActivityDetail.class);
-        detailIntent.putExtra(EARTHQUAKES_ITEM,earthQuake);
+        detailIntent.putExtra(EARTHQUAKES_ITEM, earthQuake.get_id());
         startActivity(detailIntent);
     }
-
 
 
 }
