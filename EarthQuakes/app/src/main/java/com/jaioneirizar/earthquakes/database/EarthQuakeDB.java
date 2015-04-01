@@ -60,11 +60,16 @@ public class EarthQuakeDB {
     }
 
 
-    public List getEarthQuake(String id){
-            String where = KEY_ID + "=?";
-             String [] whereArgs = { id
-        };
-        return query(where, whereArgs);
+    public EarthQuake getById(String id){
+        EarthQuake eq = null;
+
+        String where = KEY_ID + "=?";
+        String whereArgs[] = {id};
+        List <EarthQuake> q = query(where, whereArgs);
+        if (q.size()>0){
+            eq =  q.get(0);
+        }
+        return eq;
 
     }
 

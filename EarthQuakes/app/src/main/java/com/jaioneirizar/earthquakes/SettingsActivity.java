@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 
@@ -25,8 +26,8 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             .replace(android.R.id.content, new SettingsFragment())
             .commit();
 
-       // SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-       // pref.registerOnSharedPreferenceChangeListener(this);
+       SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+       pref.registerOnSharedPreferenceChangeListener(this);
 
 
     }
@@ -36,20 +37,33 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
    // @Override
     public void onSharedPreferenceChanged(SharedPreferences pref, String key) {
 
-        Log.d("CHANGE", key);
-
-    }
-
-
-    private void SetAlarms (){
-
-        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(this.ALARM_SERVICE);
         int alarmtype = AlarmManager.RTC;
-        long timerOrLengthofWait= AlarmManager.INTERVAL_HOUR;
+        long timerOrLengthofWait = AlarmManager.INTERVAL_HOUR;
         String ALARM_ACTION = "ALARM_ACTION";
         Intent intent = new Intent(ALARM_ACTION);
         PendingIntent alarmIntent = PendingIntent.getService(this, 0, intent, 0);
-        alarmManager.set(alarmtype,timerOrLengthofWait, alarmIntent);
+
+
+        if (key.equals(getString(R.string.pref_auto_update))) {
+            if(pref.getBoolean(getString(R.string.pref_auto_update), false)){
+            alarmManager.setRepeating(alarmtype, 0, timerOrLengthofWait, alarmIntent);
+
+
+         } else {
+            alarmManager.cancel(alarmIntent);
+            }
+         }
+            else if(key.equals(getString(R.string.pref_auto_interval))){
+
+            alarmManager.setRepeating(alarmtype,0,timerOrLengthofWait, alarmIntent);
+
+
+        }
+
     }
 
 }
+
+
+
