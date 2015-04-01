@@ -13,7 +13,8 @@ import android.util.Log;
 
 
 import com.jaioneirizar.earthquakes.fragments.SettingsFragment;
-import com.jaioneirizar.earthquakes.services.DownloadEarthQuakesService;
+import com.jaioneirizar.earthquakes.managers.EarthQuakeAlarmManager;
+
 
 public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -22,48 +23,45 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         super.onCreate(savedInstanceState);
         //  addPreferencesFromResource(R.xml.userpreferences);
         getFragmentManager()
-          .beginTransaction()
-            .replace(android.R.id.content, new SettingsFragment())
-            .commit();
+                .beginTransaction()
+                .replace(android.R.id.content, new SettingsFragment())
+                .commit();
 
-       SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-       pref.registerOnSharedPreferenceChangeListener(this);
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        pref.registerOnSharedPreferenceChangeListener(this);
 
 
     }
 
 
-
-   // @Override
+    // @Override
     public void onSharedPreferenceChanged(SharedPreferences pref, String key) {
 
-        AlarmManager alarmManager = (AlarmManager) getSystemService(this.ALARM_SERVICE);
-        int alarmtype = AlarmManager.RTC;
-        long timerOrLengthofWait = AlarmManager.INTERVAL_HOUR;
-        String ALARM_ACTION = "ALARM_ACTION";
-        Intent intent = new Intent(ALARM_ACTION);
-        PendingIntent alarmIntent = PendingIntent.getService(this, 0, intent, 0);
+        String Opcion1 = getString(R.string.pref_auto_update);
+        String Opcion2 = getString(R.string.auto_update_interval);
 
+        if (key.equals(Opcion1)) {
+            if (pref.getBoolean(Opcion1, false)) {
 
-        if (key.equals(getString(R.string.pref_auto_update))) {
-            if(pref.getBoolean(getString(R.string.pref_auto_update), false)){
-            alarmManager.setRepeating(alarmtype, 0, timerOrLengthofWait, alarmIntent);
+                long interval = Long.parseLong(pref.getString(Opcion2, "68"));
 
+                EarthQuakeAlarmManager.setAlarm(this, interval * 60 * 1000);
+            } else {
+                EarthQuakeAlarmManager.stopAlarm(this);
+               }
+            } else if (key.equals(Opcion2)) {
 
-         } else {
-            alarmManager.cancel(alarmIntent);
+                long interval = Long.parseLong(pref.getString(Opcion2, "68"));
+                EarthQuakeAlarmManager.updateAlarm(this, interval * 60 * 1000);
+
             }
-         }
-            else if(key.equals(getString(R.string.pref_auto_interval))){
-
-            alarmManager.setRepeating(alarmtype,0,timerOrLengthofWait, alarmIntent);
-
 
         }
-
     }
 
-}
+
+
+
 
 
 
