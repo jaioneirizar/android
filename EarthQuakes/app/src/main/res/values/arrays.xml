@@ -4,10 +4,10 @@
         <item>1</item>
         <item>2</item>
         <item>5</item>
+        <item>10</item>
+        <item>15</item>
         <item>30</item>
         <item>60</item>
-        <item>120</item>
-        <item>450</item>
     </string-array>
     <string-array name="listfrecuency_options">
          <item>2min</item>
