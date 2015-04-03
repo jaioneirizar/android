@@ -9,7 +9,7 @@ import android.util.Log;
 
 import com.jaioneirizar.earthquakes.R;
 
-public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SettingsFragment extends PreferenceFragment  {
 
     private String EARTHQUAKE = "EARTHQUAKE";
     @Override
@@ -18,11 +18,11 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
         addPreferencesFromResource(R.xml.userpreferences);
 
-      SharedPreferences  prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        prefs.registerOnSharedPreferenceChangeListener(this);
+    //  SharedPreferences  prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        //prefs.registerOnSharedPreferenceChangeListener(this);
     }
 
-    @Override
+   /* @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
 
@@ -44,7 +44,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
 
         }
-    }
+    }*/
 
 
 
