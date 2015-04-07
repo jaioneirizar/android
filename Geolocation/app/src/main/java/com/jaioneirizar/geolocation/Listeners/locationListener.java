@@ -7,14 +7,21 @@ import android.os.Bundle;
 /**
  * Created by cursomovil on 1/04/15.
  */
-public class locationListener implements  LocationListener {
+
+public class locationListener implements  android.location.LocationListener {
 
 
-    public interface setLOcationInterface {
-        public void addLocation (Location location)
+    public interface setLocationInterface {
+        public void addLocation (Location location);
     }
 
-    private locationListener(setLOcationInterface target){
+    private setLocationInterface target;
+
+    public locationListener(setLocationInterface target){
+
+        this.target= target;
+
+
 
     }
 

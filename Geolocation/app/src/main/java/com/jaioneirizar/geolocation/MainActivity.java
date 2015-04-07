@@ -3,17 +3,17 @@ package com.jaioneirizar.geolocation;
 import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+
 import android.widget.TextView;
 
+import com.jaioneirizar.geolocation.Listeners.locationListener;
 
-public class MainActivity extends ActionBarActivity implements LocationListener {
+
+public class MainActivity extends ActionBarActivity implements  locationListener.setLocationInterface{
 
 
     private TextView lblAltitude;
@@ -23,12 +23,15 @@ public class MainActivity extends ActionBarActivity implements LocationListener 
 
 
     private  String provider;
+    private LocationManager locationManager;
 
-    LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+    //LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        locationManager = (LocationManager)getSystemService (Context.LOCATION_SERVICE);
 
         lblAltitude = (TextView) findViewById(R.id.lblAltitude);
         lblLatitude = (TextView) findViewById(R.id.lblLatitude);
@@ -61,7 +64,8 @@ public class MainActivity extends ActionBarActivity implements LocationListener 
         int t=5000;
         int distance = 5;
 
-        LocationListener listener = new LocationListener() ;
+
+        locationListener listener = new locationListener(this);
 
 
         locationManager.requestLocationUpdates(provider,t,distance,listener);
@@ -69,23 +73,13 @@ public class MainActivity extends ActionBarActivity implements LocationListener 
 
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-
-    }
 
     @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
+    public void addLocation(Location location) {
 
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
+        lblLatitude.setText(String.valueOf(location.getLatitude()));
+        lblLongitude.setText(String.valueOf(location.getLongitude()));
+        lblAltitude.setText(String.valueOf(location.getAltitude()));
+        lblSpeed.setText(String.valueOf(location.getSpeed()));
     }
 }

@@ -12,6 +12,10 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.gradle" />
     </content>
+<<<<<<< HEAD
+=======
+    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
+>>>>>>> 64a65415fa4dba5a24d66a56fdb524a498eabf28
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
