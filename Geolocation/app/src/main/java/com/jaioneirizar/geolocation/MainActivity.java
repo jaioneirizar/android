@@ -71,7 +71,7 @@ public class MainActivity extends ActionBarActivity implements LocationListener 
 
     @Override
     public void onLocationChanged(Location location) {
-        
+
     }
 
     @Override
