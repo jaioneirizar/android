@@ -1,7 +1,6 @@
 package com.jaioneirizar.geolocation.Listeners;
 
 import android.location.Location;
-import android.location.LocationListener;
 import android.os.Bundle;
 
 /**
@@ -22,14 +21,13 @@ public class locationListener implements  android.location.LocationListener {
         this.target= target;
 
 
-
     }
 
 
 
     @Override
     public void onLocationChanged(Location location) {
-        location.getLatitude();
+        target.addLocation(location);
 
     }
 
