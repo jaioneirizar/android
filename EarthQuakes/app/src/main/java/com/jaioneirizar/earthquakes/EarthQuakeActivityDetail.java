@@ -1,5 +1,6 @@
 package com.jaioneirizar.earthquakes;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -21,7 +22,7 @@ public class EarthQuakeActivityDetail extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_earth_quake_activity_detail);
+         setContentView(R.layout.activity_earth_quake_activity_detail);
         db = new EarthQuakeDB(this);
 
 
