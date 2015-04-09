@@ -11,5 +11,6 @@
         android:name="com.jaioneirizar.earthquakes.fragments.EarthQuakeListFragment"
         android:id="@+id/fragment"
         android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        tools:layout="@layout/earthquakes_list" />
 </RelativeLayout>

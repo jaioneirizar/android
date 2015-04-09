@@ -43,7 +43,7 @@ public class DowloadEarthQuakesTask extends AsyncTask<String, EarthQuake, Intege
 
     public DowloadEarthQuakesTask(Context context, AddEarthQuakeInterface target) {
         this.target = target;
-        earthQuakeDB = new EarthQuakeDB(context);
+        //earthQuakeDB = new EarthQuakeDB(context);
 
     }
 
