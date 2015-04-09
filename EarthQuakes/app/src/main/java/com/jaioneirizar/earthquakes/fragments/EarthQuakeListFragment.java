@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.ListFragment;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +17,6 @@ import com.jaioneirizar.earthquakes.R;
 
 import com.jaioneirizar.earthquakes.database.EarthQuakeDB;
 import com.jaioneirizar.earthquakes.model.EarthQuake;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -124,7 +121,8 @@ public class EarthQuakeListFragment extends ListFragment
         super.onListItemClick(l, v, position, id);
 
         EarthQuake earthQuake = earthQuakes.get(position);
-       Intent detailIntent = new Intent(getActivity(), EarthQuakeActivityDetail.class);
+         Intent detailIntent = new Intent(getActivity(), EarthQuakeActivityDetail.class);
+        //Intent detailIntent = new Intent(getActivity(), mapsFragment.class);
 
         detailIntent.putExtra(EARTHQUAKES_ITEM, earthQuake.get_id());
         startActivity(detailIntent);
