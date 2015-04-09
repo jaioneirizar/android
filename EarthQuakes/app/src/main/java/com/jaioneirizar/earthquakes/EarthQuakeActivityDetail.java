@@ -70,26 +70,27 @@ public class EarthQuakeActivityDetail extends ActionBarActivity {
             // Check if we were successful in obtaining the map.
             if (mapa != null) {
 
-                Lat=earthQuake.getCoords().getLng();
-                Lng=earthQuake.getCoords().getLat();
+                Lng=earthQuake.getCoords().getLng();
+                Lat=earthQuake.getCoords().getLat();
+                String Place = earthQuake.getPlace();
 
-                mapa.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                        mapa.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
                 MarkerOptions marker = new MarkerOptions()
 
 
 
-                        .position(new LatLng(Lat,Lng)).title("Marker");
+                        .position(new LatLng(Lng,Lat)).title(Place);
 
                 mapa.addMarker(marker);
 
-                LatLng position = new LatLng(Lat,Lng);
+                LatLng position = new LatLng(Lng,Lat);
                 CameraPosition camPos = new CameraPosition.Builder().target(position)
 
-                        .zoom(16)
+                        .zoom(12)
 
-                        .bearing(45)
+                       // .bearing(45)
 
-                        .tilt(70)
+                     //   .tilt(70)
 
                         .build();
 
