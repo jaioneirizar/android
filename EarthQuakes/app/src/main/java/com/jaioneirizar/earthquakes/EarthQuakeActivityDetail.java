@@ -77,21 +77,32 @@ public class EarthQuakeActivityDetail extends ActionBarActivity {
                 Lng=earthQuake.getCoords().getLng();
                 Lat=earthQuake.getCoords().getLat();
                 String Place = earthQuake.getPlace();
+<<<<<<< HEAD
                 String Url = earthQuake.getUrl();
+=======
+>>>>>>> b47858f8ec2d76bcfd00fce7960c6c970ee52665
 
                         mapa.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
                 MarkerOptions marker = new MarkerOptions()
 
 
 
+<<<<<<< HEAD
                         .position(new LatLng(Lng,Lat)).title(Place).snippet(Url);
+=======
+                        .position(new LatLng(Lng,Lat)).title(Place);
+>>>>>>> b47858f8ec2d76bcfd00fce7960c6c970ee52665
 
                 mapa.addMarker(marker);
 
                 LatLng position = new LatLng(Lng,Lat);
                 CameraPosition camPos = new CameraPosition.Builder().target(position)
 
+<<<<<<< HEAD
                         .zoom(5)
+=======
+                        .zoom(12)
+>>>>>>> b47858f8ec2d76bcfd00fce7960c6c970ee52665
 
                        // .bearing(45)
 
