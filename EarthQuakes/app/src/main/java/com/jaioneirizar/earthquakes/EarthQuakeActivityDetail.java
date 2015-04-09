@@ -70,8 +70,8 @@ public class EarthQuakeActivityDetail extends ActionBarActivity {
             // Check if we were successful in obtaining the map.
             if (mapa != null) {
 
-                Lat=earthQuake.getCoords().getLat();
-                Lng=earthQuake.getCoords().getLng();
+                Lat=earthQuake.getCoords().getLng();
+                Lng=earthQuake.getCoords().getLat();
 
                 mapa.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
                 MarkerOptions marker = new MarkerOptions()
@@ -85,7 +85,7 @@ public class EarthQuakeActivityDetail extends ActionBarActivity {
                 LatLng position = new LatLng(Lat,Lng);
                 CameraPosition camPos = new CameraPosition.Builder().target(position)
 
-                        .zoom(19)
+                        .zoom(16)
 
                         .bearing(45)
 
