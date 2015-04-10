@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+
+import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,68 +68,64 @@ public class EarthQuakesMapsFragment extends MapFragment implements GoogleMap.On
 
         this.earthQuakes = earthquake;
 
-       // View layout
-
-
-
-
     }
 
 
     @Override
     public void onMapLoaded() {
 
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
 
 
-        if (mapa == null) {
-            // Try to obtain the map from the SupportMapFragment.
-           // mapa = getMap();
-            LatLngBounds.Builder builder= new LatLngBounds.Builder();
 
-            // Check if we were successful in obtaining the map.
-            if (mapa != null) {
+                    for (int i = 0; i < earthQuakes.size(); i++) {
 
-                for (int i = 0; i < earthQuakes.size(); i++) {
+                        LatLng eartqueakeposition = new LatLng(earthQuakes.get(i).getCoords().getLng(),
+                                earthQuakes.get(i).getCoords().getLat());
+                        Log.d("jaione", String.valueOf(eartqueakeposition));
+                        String Place = earthQuakes.get(i).getPlace();
+                        String Url = earthQuakes.get(i).getUrl();
+                        Double Magnitude = earthQuakes.get(i).getMagnitude();
 
-                    EarthQuake earthQuake = earthQuakes.get(i);
+                        mapa.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                        MarkerOptions marker = new MarkerOptions().position(eartqueakeposition).title(Place).snippet(String.valueOf(Magnitude));
 
-                    Lng = earthQuake.getCoords().getLng();
-                    Lat = earthQuake.getCoords().getLat();
-                    String Place = earthQuake.getPlace();
-                    String Url = earthQuake.getUrl();
 
-                    mapa.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-                    MarkerOptions marker = new MarkerOptions().position(new LatLng(Lng, Lat)).title(Place).snippet(Url);
+                        mapa.addMarker(marker);
+                        builder.include(marker.getPosition());
 
-                    mapa.addMarker(marker);
-                    builder.include(marker.getPosition());
 
+                    }
+
+                    LatLngBounds bounds = builder.build();
+
+                    // LatLng position = new LatLng(Lng, Lat);
+                    // CameraPosition camPos = new CameraPosition.Builder().target(position)
+
+
+                    if (earthQuakes.size() == 1) {
+                        camUpd = CameraUpdateFactory.newLatLngZoom(new LatLng(earthQuakes.get(0).getCoords().getLat(),
+                                earthQuakes.get(0).getCoords().getLng()), 0);
+                    } else {
+                        camUpd = CameraUpdateFactory.newLatLngBounds(bounds, 0);
+                    }
+
+                    // .zoom(5)
+
+                    // .bearing(45)
+
+                    //   .tilt(70)
+
+                    // .build();
+
+                    //   camUpd = CameraUpdateFactory.newCameraPosition(camPos);
+
+                    //   mapa.animateCamera(camUpd);
+
+
+                    mapa.animateCamera(camUpd);
 
                 }
-
-                LatLngBounds bounds = builder.build();
-
-                // LatLng position = new LatLng(Lng, Lat);
-                // CameraPosition camPos = new CameraPosition.Builder().target(position)
-
-                CameraUpdate camUpd = CameraUpdateFactory.newLatLngBounds(bounds, 0);
-
-                // .zoom(5)
-
-                // .bearing(45)
-
-                //   .tilt(70)
-
-                // .build();
-
-                //   camUpd = CameraUpdateFactory.newCameraPosition(camPos);
-
-                //   mapa.animateCamera(camUpd);
-
-                mapa.moveCamera(camUpd);
-
             }
-        }
 
-    }
-}
+
