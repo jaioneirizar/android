@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+
 import com.jaioneirizar.earthquakes.EarthQuakeActivityDetail;
 import com.jaioneirizar.earthquakes.R;
 
@@ -31,7 +32,7 @@ import static android.widget.Toast.makeText;
  * Activities containing this fragment MUST implement the //{@link //OnFragmentInteractionListener}
  * interface.
  */
-public class EarthQuakeListFragment extends ListFragment
+public class EarthQuakeListFragment extends  ListFragment
         //implements DowloadEarthQuakesTask.AddEarthQuakeInterface
 
 {

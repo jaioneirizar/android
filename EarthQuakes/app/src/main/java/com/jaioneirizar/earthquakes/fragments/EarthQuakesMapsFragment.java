@@ -59,10 +59,6 @@ public class EarthQuakesMapsFragment extends MapFragment implements GoogleMap.On
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 
     public void setEarthQuakes(List<EarthQuake> earthquake) {
 
@@ -82,7 +78,6 @@ public class EarthQuakesMapsFragment extends MapFragment implements GoogleMap.On
 
                         LatLng eartqueakeposition = new LatLng(earthQuakes.get(i).getCoords().getLng(),
                                 earthQuakes.get(i).getCoords().getLat());
-                        Log.d("jaione", String.valueOf(eartqueakeposition));
                         String Place = earthQuakes.get(i).getPlace();
                         String Url = earthQuakes.get(i).getUrl();
                         Double Magnitude = earthQuakes.get(i).getMagnitude();

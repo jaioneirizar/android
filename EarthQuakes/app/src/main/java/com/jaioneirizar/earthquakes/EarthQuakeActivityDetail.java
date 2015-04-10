@@ -1,5 +1,7 @@
 package com.jaioneirizar.earthquakes;
 
+import android.app.ActionBar;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -17,7 +19,7 @@ import com.jaioneirizar.earthquakes.model.EarthQuake;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EarthQuakeActivityDetail extends ActionBarActivity {
+public class EarthQuakeActivityDetail extends ActionBarActivity implements ActionBar.TabListener{
 
     private EarthQuake earthQuake;
     private TextView lblid;
@@ -64,83 +66,27 @@ public class EarthQuakeActivityDetail extends ActionBarActivity {
 
 
 
-
-    /*protected void MapView(EarthQuake earthquake) {
-
-
-        if (mapa == null) {
-            // Try to obtain the map from the SupportMapFragment.
-            mapa = ((MapFragment)getFragmentManager().findFragmentById(R.id.map)).getMap();
-            // Check if we were successful in obtaining the map.
-            if (mapa != null) {
-
-                Lng=earthQuake.getCoords().getLng();
-                Lat=earthQuake.getCoords().getLat();
-                String Place = earthQuake.getPlace();
-<<<<<<< HEAD
-                String Url = earthQuake.getUrl();
-=======
-<<<<<<< HEAD
-                String Url = earthQuake.getUrl();
-=======
->>>>>>> b47858f8ec2d76bcfd00fce7960c6c970ee52665
->>>>>>> 6847557e38977078074d1a33ffd135577efbb245
-
-                        mapa.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-                MarkerOptions marker = new MarkerOptions()
-
-
-
-<<<<<<< HEAD
-                        .position(new LatLng(Lng,Lat)).title(Place).snippet(Url);
-=======
-<<<<<<< HEAD
-                        .position(new LatLng(Lng,Lat)).title(Place).snippet(Url);
-=======
-                        .position(new LatLng(Lng,Lat)).title(Place);
->>>>>>> b47858f8ec2d76bcfd00fce7960c6c970ee52665
->>>>>>> 6847557e38977078074d1a33ffd135577efbb245
-
-                mapa.addMarker(marker);
-
-                LatLng position = new LatLng(Lng,Lat);
-                CameraPosition camPos = new CameraPosition.Builder().target(position)
-
-<<<<<<< HEAD
-                        .zoom(5)
-=======
-<<<<<<< HEAD
-                        .zoom(5)
-=======
-                        .zoom(12)
->>>>>>> b47858f8ec2d76bcfd00fce7960c6c970ee52665
->>>>>>> 6847557e38977078074d1a33ffd135577efbb245
-
-                       // .bearing(45)
-
-                     //   .tilt(70)
-
-                        .build();
-
-                camUpd = CameraUpdateFactory.newCameraPosition(camPos);
-
-                mapa.animateCamera(camUpd);
-
-            }
-        }
-
-
-    }*/
-
-
-
-
     private void populateView(EarthQuake earthquake){
 
         lblid.setText(earthQuake.get_id());
         lblsite.setText(earthQuake.getPlace());
         lblurl.setText(earthQuake.getUrl());
        // lblurl.setText(Html.fromHtml("<a href=" + earthQuake.getUrl() + "></a>"));
+
+    }
+
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
 
     }
 }
