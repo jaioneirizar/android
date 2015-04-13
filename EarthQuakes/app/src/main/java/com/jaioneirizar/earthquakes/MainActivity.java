@@ -3,28 +3,86 @@ package com.jaioneirizar.earthquakes;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
+import android.app.ActionBar;
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.jaioneirizar.earthquakes.database.EarthQuakeDB;
+import com.jaioneirizar.earthquakes.fragments.EarthQuakeListFragment;
+import com.jaioneirizar.earthquakes.fragments.EarthQuakesMapsFragment;
+import com.jaioneirizar.earthquakes.fragments.EarthQuakesMapsListFragment;
 import com.jaioneirizar.earthquakes.managers.EarthQuakeAlarmManager;
-import com.jaioneirizar.earthquakes.services.DownloadEarthQuakesService;
+import com.jaioneirizar.earthquakes.tabs.TabListener;
 import com.jaioneirizar.earthquakes.tasks.DowloadEarthQuakesTask;
 
 
-public class MainActivity extends ActionBarActivity implements DowloadEarthQuakesTask.AddEarthQuakeInterface {
+
+public class MainActivity extends Activity implements DowloadEarthQuakesTask.AddEarthQuakeInterface  {
 
     private static final int PREFS_ACTIVITY = 1 ;
     private EarthQuakeDB dbHelper;
     private final String EARTHQUAKE_PREFS= "EARTHQUAKE_PREFS";
-
+    private final String TABLIST ="LIST";
+    private final String TABMAP ="MAP";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        /* anadimos tabs*/
+
+        final ActionBar actionBar = getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle("EARTHQUAKES");
+
+        ActionBar.Tab tablist	=	actionBar.newTab();
+
+        tablist.setText(TABLIST)
+
+                .setTabListener(
+
+                        new	TabListener<EarthQuakeListFragment>
+
+                                (this,	R.id.fragmento,	EarthQuakeListFragment.class));
+
+
+        actionBar.addTab(tablist);
+
+
+        ActionBar.Tab tabmap	=	actionBar.newTab();
+
+        tabmap.setText(TABMAP)
+
+                .setIcon(R.drawable.ic_launcher)
+
+                .setContentDescription(TABMAP)
+
+                .setTabListener(
+
+                        new TabListener<EarthQuakesMapsListFragment>
+
+                                (this, R.id.fragmento, EarthQuakesMapsListFragment.class));
+
+        actionBar.addTab(tabmap);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
        /* Intent download = new Intent(this, DownloadEarthQuakesService.class);
         startService(download);*/

@@ -1,10 +1,8 @@
 package com.jaioneirizar.earthquakes;
 
-import android.app.ActionBar;
-import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -21,7 +19,7 @@ import java.util.List;
 
 //public class EarthQuakeActivityDetail extends ActionBarActivity implements ActionBar.TabListener{
 
-public class EarthQuakeActivityDetail extends ActionBarActivity {
+public class EarthQuakeActivityDetail2 extends ActionBarActivity {
 
     private EarthQuake earthQuake;
     private TextView lblid;
@@ -57,12 +55,12 @@ public class EarthQuakeActivityDetail extends ActionBarActivity {
 
         //Log.d("change", earthQuake.get_id());
         populateView(earthQuake);
-      /*  mapfragment= (EarthQuakesMapsFragment)getFragmentManager().findFragmentById(R.id.mapa);
+        mapfragment= (EarthQuakesMapsFragment)getFragmentManager().findFragmentById(R.id.mapa);
        //no se puede1 hacer esto porque lo hace android
        // MapsFragment mapfragment = new MapsFragment();
         List <EarthQuake> earthQuakes = new ArrayList<>();
         earthQuakes.add(earthQuake);
-       mapfragment.setEarthQuakes(earthQuakes);*/
+        //mapfragment.setEarthQuakes(earthQuakes);
 
     }
 
