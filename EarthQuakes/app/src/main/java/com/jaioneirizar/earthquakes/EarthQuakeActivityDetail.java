@@ -1,6 +1,7 @@
 package com.jaioneirizar.earthquakes;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -21,7 +22,7 @@ import java.util.List;
 
 //public class EarthQuakeActivityDetail extends ActionBarActivity implements ActionBar.TabListener{
 
-public class EarthQuakeActivityDetail extends ActionBarActivity {
+public class EarthQuakeActivityDetail extends Activity {
 
     private EarthQuake earthQuake;
     private TextView lblid;

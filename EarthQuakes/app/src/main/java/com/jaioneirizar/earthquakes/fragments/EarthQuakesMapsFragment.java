@@ -67,43 +67,17 @@ public class EarthQuakesMapsFragment extends AbstractMapFragment {
 
     @Override
     protected void PintarMapa() {
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        MarkerOptions marker = crearMarker(earthQuake);
 
+        getMap().addMarker(marker);
 
+        CameraPosition camPos = new CameraPosition.Builder().target(marker.getPosition())
+                .zoom(5)
+                .build();
 
-        for (int i = 0; i < earthQuakes.size(); i++) {
+        CameraUpdate camUpd = CameraUpdateFactory.newCameraPosition(camPos);
 
-            LatLng eartqueakeposition = new LatLng(earthQuakes.get(i).getCoords().getLng(),
-                    earthQuakes.get(i).getCoords().getLat());
-            String Place = earthQuakes.get(i).getPlace();
-            String Url = earthQuakes.get(i).getUrl();
-            Double Magnitude = earthQuakes.get(i).getMagnitude();
-
-            getMap().setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-            MarkerOptions marker = new MarkerOptions().position(eartqueakeposition).title(Place).snippet(String.valueOf(Magnitude));
-
-
-            getMap().addMarker(marker);
-            builder.include(marker.getPosition());
-
-
-        }
-
-        LatLngBounds bounds = builder.build();
-
-        // LatLng position = new LatLng(Lng, Lat);
-        // CameraPosition camPos = new CameraPosition.Builder().target(position)
-
-
-        if (earthQuakes.size() == 1) {
-            camUpd = CameraUpdateFactory.newLatLngZoom(new LatLng(earthQuakes.get(0).getCoords().getLat(),
-                    earthQuakes.get(0).getCoords().getLng()), 0);
-        } else {
-            camUpd = CameraUpdateFactory.newLatLngBounds(bounds, 0);
-        }
-
-        mapa.animateCamera(camUpd);
-
+        getMap().animateCamera(camUpd);
     }
 
 

@@ -60,4 +60,17 @@ public  abstract  class AbstractMapFragment  extends MapFragment implements Goog
         this.PintarMapa();
 
     }
+    protected MarkerOptions crearMarker(EarthQuake earthQuake) {
+        LatLng point = new LatLng(
+                earthQuake.getCoords().getLng(),
+                earthQuake.getCoords().getLat()
+        );
+
+        MarkerOptions marker = new MarkerOptions()
+                .position(point)
+                .title(earthQuake.getPlace())
+                .snippet(String.valueOf(earthQuake.getMagnitude()));
+
+        return marker;
+    }
 }
