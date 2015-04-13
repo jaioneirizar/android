@@ -16,6 +16,7 @@ import android.widget.ListView;
 import com.jaioneirizar.earthquakes.EarthQuakeActivityDetail;
 import com.jaioneirizar.earthquakes.R;
 
+import com.jaioneirizar.earthquakes.abstracts.AbstractMapFragment;
 import com.jaioneirizar.earthquakes.database.EarthQuakeDB;
 import com.jaioneirizar.earthquakes.model.EarthQuake;
 
@@ -128,6 +129,9 @@ public class EarthQuakeListFragment extends  ListFragment
         detailIntent.putExtra(EARTHQUAKES_ITEM, earthQuake.get_id());
         startActivity(detailIntent);
     }
+
+
+
 
 
 }

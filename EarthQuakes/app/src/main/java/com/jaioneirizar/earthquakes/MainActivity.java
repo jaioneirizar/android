@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.jaioneirizar.earthquakes.database.EarthQuakeDB;
 import com.jaioneirizar.earthquakes.fragments.EarthQuakeListFragment;
 import com.jaioneirizar.earthquakes.fragments.EarthQuakesMapsFragment;
+import com.jaioneirizar.earthquakes.fragments.EarthQuakesMapsListFragment;
 import com.jaioneirizar.earthquakes.managers.EarthQuakeAlarmManager;
 import com.jaioneirizar.earthquakes.tabs.TabListener;
 import com.jaioneirizar.earthquakes.tasks.DowloadEarthQuakesTask;
@@ -63,9 +64,9 @@ public class MainActivity extends Activity implements DowloadEarthQuakesTask.Add
 
                 .setTabListener(
 
-                        new TabListener<EarthQuakesMapsFragment>
+                        new TabListener<EarthQuakesMapsListFragment>
 
-                                (this, R.id.fragmento, EarthQuakesMapsFragment.class));
+                                (this, R.id.fragmento, EarthQuakesMapsListFragment.class));
 
         actionBar.addTab(tabmap);
 
