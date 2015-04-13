@@ -65,7 +65,7 @@ public class EarthQuakesMapsListFragment extends AbstractMapFragment {
             camUpd = CameraUpdateFactory.newLatLngBounds(bounds, 0);
         }
 
-        mapa.moveCamera(camUpd);
+        getMap().moveCamera(camUpd);
 
     }
 
