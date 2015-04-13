@@ -1,212 +1,165 @@
 package com.jaioneirizar.calculadora;
 
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-
-public class MainActivity extends ActionBarActivity implements View.OnClickListener {
-
-    private CalcLogic calc = new CalcLogic();
 
 
-    private TextView result;
-    private Double rs=0.0;
-    private boolean clear = true;
+        import android.support.v7.app.ActionBarActivity;
+        import android.os.Bundle;
+        import android.util.Log;
+
+        import android.view.View;
+        import android.widget.Button;
+        import android.widget.TextView;
+
+        import com.jaioneirizar.calculadora.CalcLogic;
 
 
-    private Button btnzero;
-    private Button btnone;
-    private Button btntwo;
-    private Button btnthree;
-    private Button btnfour;
-    private Button btnfive;
-    private Button btnsix;
-    private Button btnseven;
-    private Button btneight;
-    private Button btnnine;
+public class MainActivity extends ActionBarActivity {
 
 
-   // private TextView pantalla;
-    private Button btnadd;
-    private Button btndiv;
-    private Button btnmult;
-    private Button btnclear;
-    private Button btnrest;
-    private Button btnequal;
+    private Button btnOne;
+    private Button btnTwo;
+    private Button btnThree;
+    private Button btnFour;
+    private Button btnFive;
+    private Button btnSix;
+    private Button btnSeven;
+    private Button btnEight;
+    private Button btnNine;
+    private Button btnZero;
+    private Button btnDot;
+    private Button btnPlus;
+    private Button btnMinus;
+    private Button btnMultiply;
+    private Button btnDivide;
+    private Button btnClear;
+    private Button btnEqual;
+    private TextView lblResult;
+    private String operator;
+    private String number2;
+    private Boolean limpiar;
 
-    private View.OnClickListener  numberOnclickListener=  new View.OnClickListener (){
+
+    CalcLogic calc = new CalcLogic();
+
+
+    private View.OnClickListener numbersEvent = new View.OnClickListener() {
 
         @Override
-    public  void onClick(View v){
+        public void onClick(View v) {
+            if(limpiar) {
+                lblResult.setText("");
+                limpiar = false;
+            }
+            Button b = (Button) v;
+            lblResult.setText(lblResult.getText() + b.getText().toString());
+        }
+    };
+    private View.OnClickListener operatorsEvent = new View.OnClickListener() {
 
-            setNumber(((Button)v).getText().toString());
+        @Override
+        public void onClick(View v) {
+            Button b = (Button) v;
+            operator = b.getText().toString();
+            calc.setTotal(Double.parseDouble(lblResult.getText().toString()));
 
+            limpiar = true;
+
+
+
+        }
+    };
+    private View.OnClickListener equalEvent = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            number2 = lblResult.getText().toString();
+            switch (operator) {
+                case "+":
+                    calc.add(number2);
+                    break;
+                case "-":
+                    calc.subtract(number2);
+                    break;
+                case "X":
+                    calc.multiply(number2);
+                    break;
+                case "/":
+                    calc.divide(number2);
+                    break;
+
+            }
+            lblResult.setText(calc.getTotalString());
+
+        
+        }
+    };
+    private View.OnClickListener clearEvent = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            calc.setTotal(0);
+            lblResult.setText(calc.getTotalString());
+            limpiar = true;
         }
     };
 
 
-    private View.OnClickListener  operationOnclickListener=  new View.OnClickListener (){
 
-        @Override
-        public  void onClick(View v){
-
-            setOperation(((Button)v).getText().toString());
-
-        }
-    };
-
-    private String numbersDis= null;
-    private String op= null;
-    private String operando= null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-      btnzero = (Button)findViewById(R.id.btnzero);
-      btnzero.setOnClickListener(numberOnclickListener);
-      btnone = (Button)findViewById(R.id.btnone);
-      btnone.setOnClickListener(this);
-      btntwo = (Button)findViewById(R.id.btntwo);
-      btntwo.setOnClickListener(this);
-      btnthree = (Button)findViewById(R.id.btnthree);
-      btnthree.setOnClickListener(this);
-      btnfour = (Button)findViewById(R.id.btnfour);
-      btnfour.setOnClickListener(this);
-      btnfive = (Button)findViewById(R.id.btnfive);
-      btnfive.setOnClickListener(this);
-      btnsix = (Button)findViewById(R.id.btnsix);
-      btnsix.setOnClickListener(this);
-      btnseven = (Button)findViewById(R.id.btnseven);
-      btnseven.setOnClickListener(this);
-      btneight = (Button)findViewById(R.id.btneight);
-      btneight.setOnClickListener(this);
-      btnnine = (Button)findViewById(R.id.btnnine);
-      btnnine.setOnClickListener(this);
-      result = (TextView)findViewById(R.id.fieldResultado);
 
-      //operaciones
+        btnOne = (Button) findViewById(R.id.btnOne);
+        btnTwo = (Button) findViewById(R.id.btnTwo);
+        btnThree = (Button) findViewById(R.id.btnThree);
+        btnFour = (Button) findViewById(R.id.btnFour);
+        btnFive = (Button) findViewById(R.id.btnFive);
+        btnSix = (Button) findViewById(R.id.btnSix);
+        btnSeven = (Button) findViewById(R.id.btnSeven);
+        btnEight = (Button) findViewById(R.id.btnEight);
+        btnNine = (Button) findViewById(R.id.btnNine);
+        btnZero = (Button) findViewById(R.id.btnZero);
+        btnDot = (Button) findViewById(R.id.btnDot);
+        btnPlus = (Button) findViewById(R.id.btnPlus);
+        btnMinus = (Button) findViewById(R.id.btnMinus);
+        btnMultiply = (Button) findViewById(R.id.btnMultiply);
+        btnDivide = (Button) findViewById(R.id.btnDivide);
+        btnClear = (Button) findViewById(R.id.btnClear);
+        btnEqual = (Button) findViewById(R.id.btnEqual);
+        lblResult = (TextView) findViewById(R.id.lblResult);
+        lblResult.setText("");
 
-      btnadd = (Button)findViewById(R.id.btnadd);
-      btnadd.setOnClickListener(operationOnclickListener);
-      btndiv = (Button)findViewById(R.id.btndiv);
-      btndiv.setOnClickListener(this);
-      btnmult = (Button)findViewById(R.id.btnmult);
-      btnmult.setOnClickListener(this);
-      btnclear = (Button)findViewById(R.id.btnclear);
-      btnclear.setOnClickListener(this);
-      btnrest = (Button)findViewById(R.id.btnrest);
-      btnrest.setOnClickListener(this);
-      btnequal = (Button)findViewById(R.id.btnequal);
-      btnequal.setOnClickListener(this);
+        lblResult.setText(calc.getTotalString());
 
+        limpiar = true;
 
+        this.addEventListeners();
 
-        TextView result = (TextView)findViewById(R.id.fieldResultado);
+        Log.d("CHANGE", "Calculadora en onCreate: " + calc.getTotalString());
     }
 
+    private void addEventListeners(){
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+        btnOne.setOnClickListener(numbersEvent);
+        btnTwo.setOnClickListener(numbersEvent);
+        btnThree.setOnClickListener(numbersEvent);
+        btnFour.setOnClickListener(numbersEvent);
+        btnFive.setOnClickListener(numbersEvent);
+        btnSix.setOnClickListener(numbersEvent);
+        btnSeven.setOnClickListener(numbersEvent);
+        btnEight.setOnClickListener(numbersEvent);
+        btnNine.setOnClickListener(numbersEvent);
+        btnZero.setOnClickListener(numbersEvent);
+        btnDot.setOnClickListener(numbersEvent);
+
+        btnPlus.setOnClickListener(operatorsEvent);
+        btnMinus.setOnClickListener(operatorsEvent);
+        btnMultiply.setOnClickListener(operatorsEvent);
+        btnDivide.setOnClickListener(operatorsEvent);
+        btnEqual.setOnClickListener(equalEvent);
+
+        btnClear.setOnClickListener(clearEvent);
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-       // updateField();
-    }
-
-
-
-  /*  @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
-
-
-
-
-
-
-  /* public void setNumber(String operando) {
-       // Button button = (Button)v;
-
-       // String n = button.getText().toString();
-
-        if(clear) {
-            numbers.setLength(0);
-            clear = false;
-        }
-
-        numbers.append(operando);
-
-        updateField();
-    }*/
-
-
-    private void updateField() {
-        result.setText(this.numbersDis);
-    }
-
-
-    private void calculate() {
-
-
-
-        if (op == "+") {
-            rs = calc.add(numbersDis);
-            Log.d("CALC", rs.toString());
-        } else if (op == "-") {
-          rs = calc.subtract(numbersDis);
-           // rs= calc.subtract(operando);
-          //  rs = calc.subtract(numbers);
-        } else if (op == "*") {
-           // rs = calc.multiply(rs, Double.valueOf(numbers.toString()));
-          rs = calc.multiply(numbersDis);
-
-            rs= calc.multiply(operando);
-
-        } else if (op == "/") {
-            //String resultDev = calc.divide(rs, Double.valueOf(numbers.toString()));
-          //  rs = Double.valueOf(resultDev);
-            rs = calc.divide(numbersDis);
-           // rs= calc.divide(operando);
-
-        } else {
-            rs = Double.valueOf(numbersDis);
-            //rs= calc.multiply(operando);
-        }
-
-
-
-       // numbers.setLength(0);
-       // numbersDis.concat(rs);
-
-        Log.d("CALC","test" + numbersDis);
-
-        updateField();
-    }
-
-
-
 
 
 }
