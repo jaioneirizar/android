@@ -27,6 +27,8 @@ public class MainActivity extends Activity implements DowloadEarthQuakesTask.Add
     private final String EARTHQUAKE_PREFS= "EARTHQUAKE_PREFS";
     private final String TABLIST ="LIST";
     private final String TABMAP ="MAP";
+    private ActionBar actionBar;
+    private	static final String	SELECTED_TAB_KEY = "SELECTED_TAB_KEY";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +36,7 @@ public class MainActivity extends Activity implements DowloadEarthQuakesTask.Add
 
         /* anadimos tabs*/
 
-        final ActionBar actionBar = getActionBar();
+         actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         actionBar.setDisplayShowTitleEnabled(true);
@@ -161,4 +163,21 @@ public class MainActivity extends Activity implements DowloadEarthQuakesTask.Add
 
 
     }*/
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+
+        outState.putInt(SELECTED_TAB_KEY, actionBar.getSelectedNavigationIndex());
+        super.onSaveInstanceState(outState);
+    }
+
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+
+        if	(savedInstanceState	!=	null && savedInstanceState.containsKey(SELECTED_TAB_KEY))
+            actionBar.setSelectedNavigationItem(savedInstanceState.getInt(SELECTED_TAB_KEY));
+
+        super.onRestoreInstanceState(savedInstanceState);
+    }
 }

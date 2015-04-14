@@ -31,14 +31,14 @@ public class EarthQuakesMapsListFragment extends AbstractMapFragment {
     @Override
     protected void PintarMapa() {
 
-        getMap().clear();
+        mapa.clear();
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
 
         for (EarthQuake earthQuake: earthQuakes) {
 
             MarkerOptions marker = crearMarker(earthQuake);
 
-            getMap().addMarker(marker);
+            mapa.addMarker(marker);
             builder.include(marker.getPosition());
         }
 
@@ -46,7 +46,7 @@ public class EarthQuakesMapsListFragment extends AbstractMapFragment {
 
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 10);
 
-        getMap().animateCamera(cu);
+       mapa.animateCamera(cu);
     }
 
 

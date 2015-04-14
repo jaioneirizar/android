@@ -1,24 +1,12 @@
 package com.jaioneirizar.earthquakes.fragments;
 
 
-import android.content.Intent;
-import android.os.Bundle;
+
 import android.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 
-import android.util.Log;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.SupportMapFragment;
+
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -59,7 +47,6 @@ public class EarthQuakesMapsFragment extends AbstractMapFragment {
 
 
         String id = getActivity().getIntent().getStringExtra(EarthQuakeListFragment.EARTHQUAKES_ITEM);
-        Log.d("jaione",id);
         earthQuake = db.getById(id);
 
 
@@ -69,7 +56,7 @@ public class EarthQuakesMapsFragment extends AbstractMapFragment {
     protected void PintarMapa() {
         MarkerOptions marker = crearMarker(earthQuake);
 
-        getMap().addMarker(marker);
+        mapa.addMarker(marker);
 
         CameraPosition camPos = new CameraPosition.Builder().target(marker.getPosition())
                 .zoom(5)
@@ -77,7 +64,7 @@ public class EarthQuakesMapsFragment extends AbstractMapFragment {
 
         CameraUpdate camUpd = CameraUpdateFactory.newCameraPosition(camPos);
 
-        getMap().animateCamera(camUpd);
+        mapa.animateCamera(camUpd);
     }
 
 

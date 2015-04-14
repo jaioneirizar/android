@@ -1,21 +1,14 @@
 package com.jaioneirizar.earthquakes.abstracts;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
+
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.jaioneirizar.earthquakes.database.EarthQuakeDB;
 import com.jaioneirizar.earthquakes.model.EarthQuake;
@@ -29,10 +22,7 @@ public  abstract  class AbstractMapFragment  extends MapFragment implements Goog
 
     protected EarthQuakeDB db;
     protected GoogleMap mapa;
-    protected MarkerOptions marker;
-    protected CameraUpdate camUpd;
     protected List<EarthQuake> earthQuakes;
-    protected  SharedPreferences prefs = null;
 
 
     abstract protected  void obtenerData();
@@ -48,9 +38,24 @@ public  abstract  class AbstractMapFragment  extends MapFragment implements Goog
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        setupMapIfNeeded();
+        getMap().setOnMapLoadedCallback(this);
+    }
+
+    private void setupMapIfNeeded() {
+
+        if(mapa==null){
+            mapa=getMap();
+        }
+    }
+
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View layout=super.onCreateView(inflater, container, savedInstanceState);
-        getMap().setOnMapLoadedCallback(this);
+
         return  layout;
     }
 
