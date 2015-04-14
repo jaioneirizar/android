@@ -1,10 +1,18 @@
 package com.jaioneirizar.earthquakes.services;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.media.RingtoneManager;
 import android.os.IBinder;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
+import com.jaioneirizar.earthquakes.MainActivity;
 import com.jaioneirizar.earthquakes.R;
 import com.jaioneirizar.earthquakes.database.EarthQuakeDB;
 import com.jaioneirizar.earthquakes.model.Coordinate;
@@ -21,6 +29,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+
+import static com.jaioneirizar.earthquakes.R.string.app_name;
 
 public class DownloadEarthQuakesService extends Service {
 
@@ -54,7 +64,7 @@ public class DownloadEarthQuakesService extends Service {
     }
 
 
-    private Integer updatedEarthQuake(String earthquakesFeed) {
+    private int updatedEarthQuake(String earthquakesFeed) {
 
         JSONObject json;
         Integer count = 0;
@@ -92,6 +102,7 @@ public class DownloadEarthQuakesService extends Service {
 
 
             }
+            sendNotification(count);
 
 
         } catch (MalformedURLException e) {
@@ -103,7 +114,49 @@ public class DownloadEarthQuakesService extends Service {
         }
 
         return count;
+         //sendNotification(count);
 
+    }
+
+    private void sendNotification(Integer count) {
+
+        Intent intentToFire= new Intent(this, MainActivity.class);
+        PendingIntent activityIntent = PendingIntent.getActivity(this, 0, intentToFire, 0);
+
+        Notification.Builder builder= new Notification.Builder(DownloadEarthQuakesService.this);
+
+        builder.setSmallIcon(R.drawable.ic_launcher)
+               .setContentTitle(getString(R.string.app_name))
+                .setContentText(getString(R.string.count_earthquake, count))
+                .setWhen(System.currentTimeMillis())
+
+                .setDefaults(Notification.DEFAULT_SOUND	|
+
+                        Notification.DEFAULT_VIBRATE)
+
+                .setSound(
+
+                        RingtoneManager.getDefaultUri(
+
+                        RingtoneManager.TYPE_NOTIFICATION))
+                .setContentIntent(activityIntent)
+
+                .setVibrate(new	long[]	{	1000,	1000,	1000,	1000,	1000	})
+
+                .setLights(Color.RED,	0,	1)
+                .setAutoCancel(true);
+
+        Notification	notification	=	builder.build();
+
+        String	svc	=	Context.NOTIFICATION_SERVICE;
+
+        NotificationManager notificationManager
+
+                =	(NotificationManager)getSystemService(svc);
+
+        int	NOTIFICATION_REF	=	1;
+
+        notificationManager.notify(NOTIFICATION_REF,	notification);
     }
 
 

@@ -58,9 +58,10 @@ public class MainActivity extends Activity implements DowloadEarthQuakesTask.Add
 
         ActionBar.Tab tabmap	=	actionBar.newTab();
 
-        tabmap.setText(TABMAP)
+        tabmap
+                .setText(TABMAP)
 
-                .setIcon(R.drawable.ic_launcher)
+                //.setIcon(R.drawable.ic_launcher)
 
                 .setContentDescription(TABMAP)
 
@@ -91,7 +92,7 @@ public class MainActivity extends Activity implements DowloadEarthQuakesTask.Add
         String KEY = "LAUNCHED_BEFORE";
         SharedPreferences prefs= getSharedPreferences(EARTHQUAKE_PREFS, Activity.MODE_PRIVATE);
         //DAME EL VALOR DE LAUNCHED_BEFORE, SI NO EXISTE ME DEVUELVES FALSe, es decir, es la primera vez que entra
-        if(!prefs.getBoolean(KEY, false));{
+        if(!prefs.getBoolean(KEY, false)){
             long interval = getResources().getInteger(R.integer.default_interval)* 60 * 100;
             EarthQuakeAlarmManager.setAlarm(this,interval);
             prefs.edit().putBoolean(KEY, true).apply();

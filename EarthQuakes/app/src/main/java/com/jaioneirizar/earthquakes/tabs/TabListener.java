@@ -42,8 +42,9 @@ public	class	TabListener<T	extends Fragment>	implements
             String fragmentName = fragmentClass.getName();
 
             fragment = Fragment.instantiate(activity, fragmentName);
+            //this.shoulbe ft.add//
 
-            ft.add(fragmentContainer, fragment, fragmentName);
+            ft.replace(fragmentContainer, fragment, fragmentName);
 
         } else
 

@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.app.ListFragment;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -16,6 +19,7 @@ import android.widget.ListView;
 import com.jaioneirizar.earthquakes.EarthQuakeActivityDetail;
 import com.jaioneirizar.earthquakes.R;
 
+import com.jaioneirizar.earthquakes.SettingsActivity;
 import com.jaioneirizar.earthquakes.abstracts.AbstractMapFragment;
 import com.jaioneirizar.earthquakes.database.EarthQuakeDB;
 import com.jaioneirizar.earthquakes.model.EarthQuake;
@@ -23,6 +27,8 @@ import com.jaioneirizar.earthquakes.model.EarthQuake;
 import java.util.ArrayList;
 
 import com.jaioneirizar.earthquakes.adapters.earthQuakesAdapter;
+import com.jaioneirizar.earthquakes.services.DownloadEarthQuakesService;
+import com.jaioneirizar.earthquakes.tasks.DowloadEarthQuakesTask;
 
 import static android.widget.Toast.makeText;
 
@@ -51,7 +57,7 @@ public class EarthQuakeListFragment extends  ListFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setHasOptionsMenu(true);
         prefs= PreferenceManager.getDefaultSharedPreferences(getActivity());
         db = new EarthQuakeDB(getActivity());
 
@@ -75,6 +81,9 @@ public class EarthQuakeListFragment extends  ListFragment
         t.start();*/
 
     }
+
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -130,8 +139,21 @@ public class EarthQuakeListFragment extends  ListFragment
         startActivity(detailIntent);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_refresh,menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
-
-
+        int id=item.getItemId();
+        if(id==R.id.action_refresh){
+            Intent download;
+            download = new Intent(getActivity(), DownloadEarthQuakesService.class);
+            getActivity().startService(download);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
